@@ -1,0 +1,13 @@
+
+
+.button_float {
+  transform: scale(1);
+  transition: all 0.2s ease-in-out;
+}
+
+.button_float:focus,.button_float:active{
+    transition: all 0.2s ease-in-out;
+    transform: scale(0.87);
+    cursor: pointer;
+}
+

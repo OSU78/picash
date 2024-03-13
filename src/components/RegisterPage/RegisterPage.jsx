@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Logo from "../Logo/Logo";
 import { CircleHelp } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import PasswordInput from "../PasswordInput/PasswordInput";
 import { Button } from "@mui/material";
@@ -12,13 +12,45 @@ import { toast, Toaster } from 'react-hot-toast'; // Assurez-vous que c'est le b
 import APIClient from "../../API/API"; // Mettez à jour le chemin selon l'emplacement de votre fichier APIClient
 import { useDispatch } from "react-redux";
 import { defineUSERDATA } from "../../stores/AUTH/authSlice";
+
+import { setCookie, getCookie } from '../../ConfigPicash.jsx';
+
+
+import { useEffect } from 'react';
+
+
+
+
 const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+const navigate = useNavigate()
 
-  const dispath = useDispatch();
- 
+const dispath = useDispatch();
+
+
+
+  const userData = getCookie("jwt_token_picash")
+  ? getCookie("jwt_token_picash")
+  : null;
+  const [userDataDecode, setUserDataDecode] = useState(null);
+  useEffect(() => {
+    console.log("userData : ", userData);
+    // Check if userData is not present and redirect to "/" if true
+    if (!userData) {
+      
+    } else {
+      navigate("/scan");
+      
+    }
+  }, [userData, navigate]); // Depend on userData and navigate so the effect runs when either changes
+
+
+
+
+  
+
   // Fonction pour gérer l'inscription
   const handleRegister = async () => {
     try {
@@ -28,7 +60,7 @@ const RegisterPage = () => {
 
       dispath(defineUSERDATA(response)); // Enregistre les données de l'utilisateur dans le store
       setTimeout(() =>{toast.success("Redirection dans 1 seconde ..")}, 1000); // Rediriger vers /scan après 2 secondes
-      setTimeout(() => navigate("/scan"), 2000); // Rediriger vers /scan après 2 secondes
+      setTimeout(() => navigate("/login"), 500); // Rediriger vers /scan après 2 secondes
     } catch (error) {
       console.error(error); // Affiche l'erreur dans la console si l'appel échoue
       toast.error("L'inscription a échoué."); // Affiche un message d'erreur
@@ -50,7 +82,7 @@ const RegisterPage = () => {
         x: 0,
         y: 0,
         scale: 1,
-        transition: { duration: 0.23, delay: 0.2 },
+        transition: { duration: 0.23, delay: 0.28 },
       }}
       exit={{
         opacity: 0,
@@ -76,6 +108,7 @@ const RegisterPage = () => {
               borderRadius: "0px",
               borderBottomLeftRadius: "20px",
               borderBottomRightRadius: "20px",
+              maxWidth: "97%",
             }}
           >
             <motion.div className="flex flex-row gap-4 w-full p-2 items-center justify-between pl-9 pr-9">

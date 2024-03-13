@@ -15,22 +15,22 @@ const HomePage = () => {
       initial={{
         opacity: 0,
         x: 0,
-        scale: 0,
-        y: -500,
-        transition: { duration: 0.23 },
+        scale: 1,
+        y: -100,
+        transition: { duration: 0.23, },
       }}
       animate={{
         opacity: 1,
         x: 0,
         y: 0,
         scale: 1,
-        transition: { duration: 0.23, delay: 0.26 },
+        transition: { duration: 0.13, delay: 0.36  },
       }}
       exit={{
         opacity: 0,
         scale: 1,
         x: 0,
-        y: 0,
+        y: -100,
         transition: { duration: 0.23 },
       }}
     >

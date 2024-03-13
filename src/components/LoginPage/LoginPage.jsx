@@ -9,7 +9,7 @@ import { toast, Toaster } from "react-hot-toast";
 import APIClient from "../../API/API"; // Assurez-vous que le chemin vers APIClient est correct
 import HandRegister from "../../assets/img/HandRegister.png";
 import s from "./LoginPage.module.css";
-
+import { storeJWT } from "../../stores/AUTH/authSlice";
 
 
 
@@ -17,6 +17,7 @@ import s from "./LoginPage.module.css";
 import { z } from 'zod';
 import { useDispatch } from "react-redux";
 import { defineUSERDATA } from "../../stores/AUTH/authSlice";
+import { jwtDecode } from 'jwt-decode';
 const loginSchema = z.object({
   email: z.string().email({ message: "Email invalide" }).nonempty({ message: "L'email ne peut pas être vide" }),
   password: z.string().min(1, { message: "Le mot de passe ne peut pas être vide" }),
@@ -27,7 +28,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
 
 
   // Fonction pour gérer la connexion
@@ -41,18 +42,34 @@ const LoginPage = () => {
     }
   
     try {
-      const response = await APIClient.authenticateUser(email, password);
-      console.log(response); // Afficher la réponse dans la console
-      toast.success("Connexion réussie !");
-      dispath(defineUSERDATA(response)); // Enregistre les données de l'utilisateur dans le store
-
-      setTimeout(() =>{toast.success("Redirection dans 1 seconde ..")}, 1000); // Rediriger vers /scan après 2 secondes
-      setTimeout(() => navigate("/scan"), 2000); // Rediriger vers /scan après 2 secondes
-    } catch (error) {
-      console.error(error);
-      toast.error("La connexion a échoué.");
+    const response = await APIClient.authenticateUser(email, password);
+    console.log(response); // Afficher la réponse dans la console
+    
+    // Assuming the token is in the response.Token property.
+    const jwtTokens = response.Token; 
+    if (jwtTokens) {
+      const detoken =  jwtDecode(jwtTokens);
+      toast.success("Connexion réussie !",detoken);
+     
+      console.log(detoken);
+      // Dispatch the actions with the token
+      dispatch(defineUSERDATA(detoken)); // Enregistre les données JWT décodées dans le store
+      dispatch(storeJWT(jwtTokens)); // Enregistre le JWT dans le sessionStorage et le cookie
+      
+      setTimeout(() => {
+       
+        navigate("/scan");
+      }, 1000); // Rediriger vers /scan après 1 seconde
+    } else {
+      throw new Error("Token not found in response.");
     }
-  };
+  } catch (error) {
+    console.error(error);
+    toast.error("La connexion a échoué.");
+  }
+};
+
+
   
 
   return (
@@ -98,6 +115,7 @@ const LoginPage = () => {
               borderRadius: "0px",
               borderBottomLeftRadius: "20px",
               borderBottomRightRadius: "20px",
+              maxWidth: "97%",
             }}
           >
             <motion.div className="flex flex-row gap-4 w-full p-2 items-center justify-between pl-9 pr-9">
@@ -128,7 +146,7 @@ const LoginPage = () => {
                   borderRadius: "10px",
                 }}
                 id="outlined-basic"
-                label="Renseinger votre nom"
+                label="Renseinger votre email"
                 variant="outlined"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}

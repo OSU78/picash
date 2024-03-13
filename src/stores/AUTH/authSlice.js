@@ -23,9 +23,14 @@ export const authSlice = createSlice({
   reducers: {
     // Reducer to define user DATA
       defineUSERDATA: (state, action) => {
-        console.log("define REFRESH USERDATA en cours...")
-        if (state.userData) {
-          state.userData = action.payload; // Mettez à jour directement avec le crédit récupéré
+        const token = action.payload;
+        // Ensure the token is valid and can be decoded.
+        try {
+          const decodedToken = (token); // Use jwt_decode instead of jwtDecode
+          console.log("Decoded token:", decodedToken);
+          state.userData = decodedToken; // Store the decoded token data
+        } catch (error) {
+          console.error("Error decoding token:", error);
         }
       },
 
@@ -34,12 +39,14 @@ export const authSlice = createSlice({
     // 💾 Stocke le JWT dans sessionStorage et met à jour les données utilisateur.
     storeJWT: (state, action) => {
       const token = action.payload;
-      const decodedToken = jwtDecode(token);
+      const decodedToken = (token);
       if (decodedToken) {
+
+        
         sessionStorage.setItem("jwt_token_picash", token);
         setCookie("jwt_token_picash", token, 2);
         localStorage.setItem("jwt_token_picash", token);
-
+        console.log("storeJWT en cours : ->",decodedToken)
 
         state.userData = decodedToken;
         state.isAuthenticated = true;
@@ -56,14 +63,30 @@ export const authSlice = createSlice({
     },
     // 📥 Récupère et décode le JWT de sessionStorage s'il existe.
     getJWT: (state) => {
-      let jwtToken = sessionStorage.getItem("jwt_token_picash") ? sessionStorage.getItem("jwt_token_picash") : getCookie("jwt_token_picash");
+      let jwtToken = sessionStorage.getItem("jwt_token_picash") || getCookie("jwt_token_picash");
       if (jwtToken) {
-        const decodedToken = jwtDecode(jwtToken);
-        if (decodedToken && state.userData === null) {
+        try {
+          // Decode the token
+          const decodedToken = jwtDecode(jwtToken);
+          console.log("Decoded token:", decodedToken);
+
+          // Update the state with the decoded token data
           state.userData = decodedToken;
+          state.isAuthenticated = true; // Set authentication to true
+        } catch (error) {
+          console.error("Error decoding token:", error);
+          // Handle decoding errors (e.g., token is invalid)
+          state.userData = null;
+          state.isAuthenticated = false;
+          
         }
+      } else {
+        // No token found
+        state.userData = null;
+        state.isAuthenticated = false
+      
       }
-    },
+      }
   },
 
 });

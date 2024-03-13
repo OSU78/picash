@@ -1,18 +1,75 @@
+.navBarContainer {
+  display: flex; /* Ensures the navbar is centered horizontally */
+  justify-content: center; /* Centers the navbar items */
+  align-items: center; /* Centers the navbar items vertically */
+  background-color: #5e24ff00; /* Purple background */
+  
+  border-radius: 8px; /* Rounded corners */
+  padding: 0.5rem; /* Padding around the entire navbar */
+}
 
+.navBar {
+  display: flex;
+  justify-content: space-evenly; /* Space out the nav items evenly */
+  width: 100%; /* Full width of the container */
+  max-width: 600px; /* Maximum width of the navbar */
+}
 
-.link_active {
-  color: #f5f5f5;
-  background-color: #5100ff;
-  border-radius: 0.25rem;
-  padding: 0.5rem 1rem;
-  text-decoration: none;
+.navList {
+  list-style: none; /* Removes list styling */
+  padding: 0; /* Removes padding */
+  margin: 0; /* Removes margin */
+  display: flex;
+  gap: 0.5rem; /* Spacing between each nav item */
+}
+
+.navItem {
+  display: flex; /* Aligns icon and text side by side */
+  align-items: center; /* Centers them vertically */
+}
+
+.activeLink, .inactiveLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem; /* Spacing between icon and text */
+  padding: 0.5rem 1rem; /* Padding inside each nav item */
+  text-decoration: none; /* Removes underline from links */
+  border-radius: 0.25rem; /* Rounded corners */
+  font-weight: bold; /* Makes the text bold */
+  transition:  all 0.2s ease-in-out;
+}
+
+.activeLink {
+  background-color: #5D24FF; /* Active item background color */
+  color: #FFFFFF; /* Active item text color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Optional: Adds a shadow to the active item for depth */
+}
+
+.inactiveLink {
+  background-color: transparent; /* Inactive item background */
+  color: #9E9E9E; /* Inactive item text color */
+}
+
+/* Icon styling can be added if needed */
+.icon {
+  font-size: 1.5rem; /* Adjust the size of the icons */
 }
 
 
-.link_{
-    color: #6215b4;
-    background-color: #5100ff10;
-    border-radius: 0.25rem;
-    padding: 0.5rem 1rem;
-    text-decoration: none;
+.logout_btn{
+  background-color: #7c24ff20;
+  border: 1px solid #5e24ff4f;
+  padding: 7px;
+  border-radius: 4px;
+  transition:  all 0.2s ease-in-out;
+
+}
+
+.logout_btn:focus,.inactiveLink:focus{
+  transform: scale(0.9);
+}
+
+.logout_btn:active,.activeLink:active{
+  transform: scale(0.9);
 }

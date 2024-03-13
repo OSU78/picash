@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { motion } from "framer-motion";
 import Logo from "../Logo/Logo";
 import { CircleHelp } from "lucide-react";
@@ -8,21 +8,18 @@ import PasswordInput from "../PasswordInput/PasswordInput";
 import { toast, Toaster } from "react-hot-toast";
 import APIClient from "../../API/API"; // Assurez-vous que le chemin vers APIClient est correct
 import HandRegister from "../../assets/img/HandRegister.png";
-import s from "./Scan.module.css";
+import s from "./Historique.module.css";
 import NavBar from "../NavBar/NavBar";
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { setCookie, getCookie } from '../../ConfigPicash.jsx';
 
 
-const Scan = () => {
-  
-  
+const Historique = () => {
   const navigate = useNavigate();
 
   const userData = getCookie("jwt_token_picash")
-    ? getCookie("jwt_token_picash")
-    : null;
+  ? getCookie("jwt_token_picash")
+  : null;
   const [userDataDecode, setUserDataDecode] = useState(null);
   useEffect(() => {
     console.log("userData : ", userData);
@@ -37,6 +34,8 @@ const Scan = () => {
       }
     }
   }, [userData, navigate]); // Depend on userData and navigate so the effect runs when either changes
+
+
 
 
 
@@ -58,7 +57,7 @@ const Scan = () => {
           x: 0,
           y: 0,
           scale: 1,
-          transition: { duration: 0.23, delay: 0.36 },
+          transition: { duration: 0.23, delay: 0.37 },
         }}
         exit={{
           opacity: 0,
@@ -101,7 +100,65 @@ const Scan = () => {
                   height: "75vh",
                 }}
               >
-                Main scan page
+               <div className='w-full'>
+      {userData ? (
+        <div className='flex flex-row justify-center items-center w-full'>
+       <motion.div
+       className='w-full'
+       style={{
+        maxWidth: "85%",
+       }}
+       initial={{
+        opacity: 0,
+        x: 0,
+        scale: 1,
+        y: -10,
+        transition: { duration: 0.23, delay: 0.36 },
+      }}
+      animate={{
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        transition: { duration: 0.23, delay: 0.36 },
+      }}
+      exit={{
+        opacity: 0,
+        scale: 1,
+        x: 0,
+        y: 0,
+        transition: { duration: 0.23 },
+      }}
+       >
+       <div className='flex flex-col items-center justify-center w-full gap-4'>
+          <h1 className='text-2xl uppercase text-slate-400'>Mon historique</h1>
+          {/* Display user information here */}
+          <div className='w-full' style={{
+            display: 'flex',
+            flexDirection: 'row',
+            gap: "0.5rem",
+            alignItems: 'center',
+            justifyContent: 'start',
+            padding: '0.4rem',
+            paddingLeft: '1.1rem',
+            borderRadius: '0.4rem',
+            backgroundColor: 'white',
+            border: '1px solid #5E24FF32',
+            boxShadow: '0 0 1px 0 rgba(0,0,0,0.1)',
+          
+          }}>
+            Historique des transactions
+          </div>
+          
+          {/* Add more user data fields as needed */}
+        </div>
+        </motion.div>
+       
+        </div>
+      ) : (
+        <p>User is not authenticated.</p>
+      )}
+    </div>
               </div>
             </div>
           </div>
@@ -112,4 +169,4 @@ const Scan = () => {
   );
 };
 
-export default Scan;
+export default Historique;

@@ -15,6 +15,8 @@ import NavBar from './components/NavBar/NavBar.jsx';
 
 
 function AppRouter() {
+
+  
   return (
     <BrowserRouter>
       <Provider store={store}>
@@ -33,7 +35,7 @@ function App() {
     
       
       <AppRouter />
-   
+    
   );
 }
 
