@@ -1,5 +1,4 @@
-import axios from 'axios';
-import qs from 'qs';
+
 
 const API_BASE_URL = 'http://162.19.65.178:8080'; // L'URL de base de l'API.
 
@@ -45,7 +44,7 @@ class API {
     }
   }
 
-  
+
 
   static async createUser(password, email, nameOrganisation) {
     try {
