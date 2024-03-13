@@ -22,6 +22,8 @@ const RegisterPage = () => {
       const response = await APIClient.createUser(password, email, name);
       console.log(response); // Affiche la réponse de l'API dans la console
       toast.success("Inscription réussie!"); // Affiche un message de succès
+      setTimeout(() =>{toast.success("Redirection dans 1 seconde ..")}, 1000); // Rediriger vers /scan après 2 secondes
+      setTimeout(() => navigate("/scan"), 2000); // Rediriger vers /scan après 2 secondes
     } catch (error) {
       console.error(error); // Affiche l'erreur dans la console si l'appel échoue
       toast.error("L'inscription a échoué."); // Affiche un message d'erreur

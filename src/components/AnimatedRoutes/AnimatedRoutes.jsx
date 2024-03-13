@@ -5,7 +5,7 @@ import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import { useLocation } from "react-router-dom";
 import { Routes, Route } from 'react-router-dom';
-
+import Scan from "../Scan/Scan.jsx";
 import {AnimatePresence} from 'framer-motion'
 
 const AnimatedRoutes = () => {
@@ -18,6 +18,7 @@ const AnimatedRoutes = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/scan" element={<Scan />} />
     </Routes>
     </AnimatePresence>
   );

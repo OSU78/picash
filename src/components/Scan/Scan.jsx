@@ -8,23 +8,14 @@ import PasswordInput from "../PasswordInput/PasswordInput";
 import { toast, Toaster } from "react-hot-toast";
 import APIClient from "../../API/API"; // Assurez-vous que le chemin vers APIClient est correct
 import HandRegister from "../../assets/img/HandRegister.png";
-import s from "./LoginPage.module.css";
+import s from "./Scan.module.css";
 
 
 
 
-//COnfig Zod 
-import { z } from 'zod';
 
-const loginSchema = z.object({
-  email: z.string().email({ message: "Email invalide" }).nonempty({ message: "L'email ne peut pas être vide" }),
-  password: z.string().min(1, { message: "Le mot de passe ne peut pas être vide" }),
-});
-
-
-const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Scan = () => {
+  
   const navigate = useNavigate();
 
 
@@ -103,64 +94,17 @@ const LoginPage = () => {
             </motion.div>
           </div>
 
-          <div className="flex flex-col gap-1 items-center justify-start pt-1 w-full h-full">
-            <img src={HandRegister} alt="" srcset="" width={100} />
 
-            <h1
-              className="text-3xl"
-              style={{
-                color: "#5D24FF",
-              }}
-            >
-              Connexion
-            </h1>
-            <hr className="custom_hr" />
-            <div className="flex flex-col gap-5 items-center justify-start pt-1 w-full h-full">
-              <TextField
-                className="w-full"
-                style={{
-                  maxWidth: "300px",
 
-                  borderRadius: "10px",
-                }}
-                id="outlined-basic"
-                label="Renseinger votre nom"
-                variant="outlined"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
 
-              <PasswordInput
-                password={password}
-                handlePassword={(e) => setPassword(e.target.value)}
-              />
-            </div>
 
-            <div className="w-full mt-1 mb-4 h-full flex flex-col items-center justify-start md:justify-around ">
-              <div
-                onClick={handleLogin}
-                className={`text-xl flex flex-row gap-5 justify-center items-center ${s.btn_picash} ${s.btn_picash_none_bg}`}
-              >
-                <p>Se connecter</p>
-              </div>
-              <p className="flex flex-col items-center justify-center text-slate-400 mt-2">
-                {" "}
-                <span>Vous avez déjà un compte ? </span>
-                <Link
-                  to="/register"
-                  style={{
-                    textDecoration: "underline",
-                  }}
-                >
-                  S'inscrire ici !{" "}
-                </Link>{" "}
-              </p>
-            </div>
-          </div>
+          Scan Page
+
+         
         </div>
       </div>
     </motion.div>
   );
 };
 
-export default LoginPage;
+export default Scan;
