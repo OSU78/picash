@@ -1,29 +1,54 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Logo from "../Logo/Logo";
-import { CircleHelp, Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router-dom";
-import HandRegister from "../../assets/img/HandRegister.png";
+import { CircleHelp } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
-import Input from "@mui/material/Input";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
 import PasswordInput from "../PasswordInput/PasswordInput";
-import { Button } from "@mui/material";
+import { toast, Toaster } from "react-hot-toast";
+import APIClient from "../../API/API"; // Assurez-vous que le chemin vers APIClient est correct
+import HandRegister from "../../assets/img/HandRegister.png";
 import s from "./LoginPage.module.css";
 
-import { Toaster, toast } from 'sonner'
+
+
+
+//COnfig Zod 
+import { z } from 'zod';
+
+const loginSchema = z.object({
+  email: z.string().email({ message: "Email invalide" }).nonempty({ message: "L'email ne peut pas être vide" }),
+  password: z.string().min(1, { message: "Le mot de passe ne peut pas être vide" }),
+});
 
 
 const LoginPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+
+  // Fonction pour gérer la connexion
+  const handleLogin = async () => {
+    // Empêcher la soumission si les champs ne sont pas valides
+    const result = loginSchema.safeParse({ email, password });
+    if (!result.success) {
+      // Afficher les messages d'erreur de validation
+      toast.error(result.error.errors.map((err) => err.message).join(", "));
+      return;
+    }
+  
+    try {
+      const response = await APIClient.authenticateUser(email, password);
+      console.log(response); // Afficher la réponse dans la console
+      toast.success("Connexion réussie !");
+      setTimeout(() => navigate("/scan"), 2000); // Rediriger vers /scan après 2 secondes
+    } catch (error) {
+      console.error(error);
+      toast.error("La connexion a échoué.");
+    }
   };
+  
 
   return (
     <motion.div
@@ -50,6 +75,9 @@ const LoginPage = () => {
         transition: { duration: 0.25 },
       }}
     >
+        <Toaster
+         position="bottom-center"
+        />
       <div className="flex flex-col gap-3 items-start justify-start h-100svh w-full">
         <div
           className={`
@@ -87,52 +115,46 @@ const LoginPage = () => {
             </h1>
             <hr className="custom_hr" />
             <div className="flex flex-col gap-5 items-center justify-start pt-1 w-full h-full">
+              <TextField
+                className="w-full"
+                style={{
+                  maxWidth: "300px",
 
-           
-            <TextField
-              className="w-full"
-              style={{
-                maxWidth: "300px",
+                  borderRadius: "10px",
+                }}
+                id="outlined-basic"
+                label="Renseinger votre nom"
+                variant="outlined"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
-                borderRadius: "10px",
-              }}
-              id="outlined-basic"
-              label="Renseinger votre nom"
-              variant="outlined"
-            />
-
-          
-
-            <PasswordInput
-              password={password}
-              handlePassword={(e) => setPassword(e.target.value)}
-            />
-             </div>
+              <PasswordInput
+                password={password}
+                handlePassword={(e) => setPassword(e.target.value)}
+              />
+            </div>
 
             <div className="w-full mt-1 mb-4 h-full flex flex-col items-center justify-start md:justify-around ">
-
               <div
+                onClick={handleLogin}
                 className={`text-xl flex flex-row gap-5 justify-center items-center ${s.btn_picash} ${s.btn_picash_none_bg}`}
               >
                 <p>Se connecter</p>
-             
               </div>
-              <p className="flex flex-col items-center justify-center text-slate-400 mt-2" > <span>Vous avez déjà un compte ? </span>  
-              <Link
-              to="/register"
-              style={{
-                textDecoration : "underline"
-
-              }}>S'inscrire ici ! </Link>  </p>
+              <p className="flex flex-col items-center justify-center text-slate-400 mt-2">
+                {" "}
+                <span>Vous avez déjà un compte ? </span>
+                <Link
+                  to="/register"
+                  style={{
+                    textDecoration: "underline",
+                  }}
+                >
+                  S'inscrire ici !{" "}
+                </Link>{" "}
+              </p>
             </div>
-
-
-
-
-
-
-
-
           </div>
         </div>
       </div>

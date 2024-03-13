@@ -92,6 +92,7 @@ const HomePage = () => {
           }}
         >
           <img
+          className={`${s.animation_floating}`}
             src={People}
             alt="profile"
             style={{

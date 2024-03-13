@@ -1,28 +1,31 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Logo from "../Logo/Logo";
-import { CircleHelp, Eye, EyeOff } from "lucide-react";
+import { CircleHelp } from "lucide-react";
 import { Link } from "react-router-dom";
-import HandRegister from "../../assets/img/HandRegister.png";
 import TextField from "@mui/material/TextField";
-import Input from "@mui/material/Input";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import InputAdornment from "@mui/material/InputAdornment";
-import IconButton from "@mui/material/IconButton";
 import PasswordInput from "../PasswordInput/PasswordInput";
 import { Button } from "@mui/material";
 import s from "./RegisterPage.module.css";
-
-import { Toaster, toast } from 'sonner'
-
+import HandRegister from "../../assets/img/HandRegister.png";
+import { toast, Toaster } from 'react-hot-toast'; // Assurez-vous que c'est le bon import pour votre toaster
+import APIClient from "../../API/API"; // Mettez à jour le chemin selon l'emplacement de votre fichier APIClient
 
 const RegisterPage = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  // Fonction pour gérer l'inscription
+  const handleRegister = async () => {
+    try {
+      const response = await APIClient.createUser(password, email, name);
+      console.log(response); // Affiche la réponse de l'API dans la console
+      toast.success("Inscription réussie!"); // Affiche un message de succès
+    } catch (error) {
+      console.error(error); // Affiche l'erreur dans la console si l'appel échoue
+      toast.error("L'inscription a échoué."); // Affiche un message d'erreur
+    }
   };
 
   return (
@@ -50,6 +53,7 @@ const RegisterPage = () => {
         transition: { duration: 0.25 },
       }}
     >
+      <Toaster />
       <div className="flex flex-col gap-3 items-start justify-start h-100svh w-full">
         <div
           className={`
@@ -87,62 +91,60 @@ const RegisterPage = () => {
             </h1>
             <hr className="custom_hr" />
             <div className="flex flex-col gap-5 items-center justify-start pt-1 w-full h-full">
+              <TextField
+                className="w-full"
+                style={{
+                  maxWidth: "300px",
 
-           
-            <TextField
-              className="w-full"
-              style={{
-                maxWidth: "300px",
+                  borderRadius: "10px",
+                }}
+                id="outlined-basic"
+                label="Renseinger votre nom"
+                variant="outlined"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
 
-                borderRadius: "10px",
-              }}
-              id="outlined-basic"
-              label="Renseinger votre nom"
-              variant="outlined"
-            />
+              <TextField
+                className="w-full"
+                style={{
+                  maxWidth: "300px",
 
-            <TextField
-              className="w-full"
-              style={{
-                maxWidth: "300px",
+                  borderRadius: "10px",
+                }}
+                id="outlined-basic"
+                label="Renseinger votre Email"
+                variant="outlined"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
 
-                borderRadius: "10px",
-              }}
-              id="outlined-basic"
-              label="Renseinger votre Email"
-              variant="outlined"
-            />
-
-            <PasswordInput
-              password={password}
-              handlePassword={(e) => setPassword(e.target.value)}
-            />
-             </div>
+              <PasswordInput
+                password={password}
+                handlePassword={(e) => setPassword(e.target.value)}
+              />
+            </div>
 
             <div className="w-full mt-1 mb-4 h-full flex flex-col items-center justify-start md:justify-around ">
-
               <div
+                onClick={handleRegister}
                 className={`text-xl flex flex-row gap-5 justify-center items-center ${s.btn_picash} ${s.btn_picash_none_bg}`}
               >
                 <p>S'inscrire</p>
-             
               </div>
-              <p className="flex flex-col items-center justify-center text-slate-400 mt-2" > <span>Vous ête nouveau ? </span>  
-              <Link
-              to="/login"
-              style={{
-                textDecoration : "underline"
-
-              }}>Connecter vous ici ! </Link>  </p>
+              <p className="flex flex-col items-center justify-center text-slate-400 mt-2">
+                {" "}
+                <span>Vous ête nouveau ? </span>
+                <Link
+                  to="/login"
+                  style={{
+                    textDecoration: "underline",
+                  }}
+                >
+                  Connecter vous ici !{" "}
+                </Link>{" "}
+              </p>
             </div>
-
-
-
-
-
-
-
-
           </div>
         </div>
       </div>
