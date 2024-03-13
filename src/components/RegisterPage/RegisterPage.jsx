@@ -10,18 +10,23 @@ import s from "./RegisterPage.module.css";
 import HandRegister from "../../assets/img/HandRegister.png";
 import { toast, Toaster } from 'react-hot-toast'; // Assurez-vous que c'est le bon import pour votre toaster
 import APIClient from "../../API/API"; // Mettez à jour le chemin selon l'emplacement de votre fichier APIClient
-
+import { useDispatch } from "react-redux";
+import { defineUSERDATA } from "../../stores/AUTH/authSlice";
 const RegisterPage = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const dispath = useDispatch();
+ 
   // Fonction pour gérer l'inscription
   const handleRegister = async () => {
     try {
       const response = await APIClient.createUser(password, email, name);
-      console.log(response); // Affiche la réponse de l'API dans la console
-      toast.success("Inscription réussie!"); // Affiche un message de succès
+      console.log(response);
+      toast.success("Inscription réussie!"); 
+
+      dispath(defineUSERDATA(response.data)); // Enregistre les données de l'utilisateur dans le store
       setTimeout(() =>{toast.success("Redirection dans 1 seconde ..")}, 1000); // Rediriger vers /scan après 2 secondes
       setTimeout(() => navigate("/scan"), 2000); // Rediriger vers /scan après 2 secondes
     } catch (error) {
