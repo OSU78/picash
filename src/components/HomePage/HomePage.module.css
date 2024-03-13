@@ -1,0 +1,45 @@
+.card_homePage {
+    background: #5D24FF;
+    color: white;
+    border-radius: 0px;
+    border-bottom-left-radius: 43px;
+    border-bottom-right-radius: 43px;
+    padding: 1.2rem;
+
+}
+
+
+
+
+
+
+.btn_picash {
+    background: #5D24FF;
+    color: white;
+    border-radius: 8px;
+    padding: 0.8rem 1rem;
+    text-decoration: none;
+    border: 1px solid #ebebeb;
+    width: 70%;
+    max-width: 280px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    outline: 0px solid #5e24ff00;
+    outline-offset: 1px ;
+   
+}
+
+.btn_picash:hover {
+    background: #fcfcfc31;
+    color: #ffffff;
+    
+    outline: 3px solid #8f69f8;
+    outline-offset: 3px ;
+    text-decoration: none;
+   
+    cursor: pointer;
+    transition: all 0.19s ease;
+}
