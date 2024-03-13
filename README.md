@@ -21,10 +21,9 @@ Pour démarrer avec le projet Picash, suivez ces étapes simples :
 Commencez par cloner le dépôt sur votre machine locale. Ouvrez un terminal et tapez la commande suivante :
 
 ```bash
-git clone <URL_DU_DEPOT>
+git clone https://github.com/OSU78/picash.git
 ```
 
-Assurez-vous de remplacer `<URL_DU_DEPOT>` par l'URL réelle du dépôt Git de Picash.
 
 ### Étape 2: Installer les dépendances
 
