@@ -26,7 +26,7 @@ const RegisterPage = () => {
       console.log(response);
       toast.success("Inscription réussie!"); 
 
-      dispath(defineUSERDATA(response.data)); // Enregistre les données de l'utilisateur dans le store
+      dispath(defineUSERDATA(response)); // Enregistre les données de l'utilisateur dans le store
       setTimeout(() =>{toast.success("Redirection dans 1 seconde ..")}, 1000); // Rediriger vers /scan après 2 secondes
       setTimeout(() => navigate("/scan"), 2000); // Rediriger vers /scan après 2 secondes
     } catch (error) {

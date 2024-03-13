@@ -44,7 +44,7 @@ const LoginPage = () => {
       const response = await APIClient.authenticateUser(email, password);
       console.log(response); // Afficher la réponse dans la console
       toast.success("Connexion réussie !");
-      dispath(defineUSERDATA(response.data)); // Enregistre les données de l'utilisateur dans le store
+      dispath(defineUSERDATA(response)); // Enregistre les données de l'utilisateur dans le store
 
       setTimeout(() =>{toast.success("Redirection dans 1 seconde ..")}, 1000); // Rediriger vers /scan après 2 secondes
       setTimeout(() => navigate("/scan"), 2000); // Rediriger vers /scan après 2 secondes
