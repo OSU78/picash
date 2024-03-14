@@ -8,7 +8,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { useDispatch } from "react-redux";
 import { removeJWT } from "../../stores/AUTH/authSlice";
 
-const NavBar = () => {
+const NavBar = ({iconwhite=false}) => {
   const location = useLocation();
   const navigate = useNavigate();
   useEffect(() => {
@@ -35,7 +35,7 @@ const NavBar = () => {
         {text}
       </>
     ) : (
-      <Icon style={{ fill : "#5D24FF" }} />
+      <Icon style={{ fill : iconwhite ? "white" : "#5D24FF" }} />
     );
   };
 
@@ -52,7 +52,7 @@ const NavBar = () => {
 
           <li className={location.pathname === '/scan' ? s.activeLink : s.inactiveLink}>
             <Link to="/scan">
-              {linkContent('/scan', 'QRcode', QrCodeScannerIcon)}
+              {linkContent('/scan', 'Scan', QrCodeScannerIcon)}
             </Link>
           </li>
 

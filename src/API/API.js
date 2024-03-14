@@ -124,13 +124,22 @@ class API {
       throw error;
     }
   }
-
-  static async transfer(token, spend, emailPartenaire, productName) {
+  static async transfer(token, spend, emailPartenaire, productName,name_compagny,name_groupe) {
     try {
+      // Ajout de name_compagny et name_groupe dans l'objet à envoyer
+      const bodyContent = {
+        token,
+        spend,
+        email_partenaire: emailPartenaire,
+        product_name: productName,
+        name_compagny: name_compagny, // Cette valeur devrait être dynamique ou configurée ailleurs
+        name_groupe: name_groupe, // Cette valeur devrait être dynamique ou configurée ailleurs
+      };
+
       const response = await fetch(`${API_BASE_URL}/client/transfer`, {
         method: 'POST',
         headers: apiOptions.headers,
-        body: JSON.stringify({ token, spend, email_partenaire: emailPartenaire, product_name: productName })
+        body: JSON.stringify(bodyContent)
       });
 
       if (!response.ok) {
@@ -145,7 +154,6 @@ class API {
       throw error;
     }
   }
-
   
 
 

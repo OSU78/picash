@@ -9,6 +9,7 @@
 }
 
 .navBar {
+  z-index: 1000; /* Ensures the navbar is on top of other elements */
   display: flex;
   justify-content: space-evenly; /* Space out the nav items evenly */
   width: 100%; /* Full width of the container */

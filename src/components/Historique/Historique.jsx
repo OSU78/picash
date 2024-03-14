@@ -50,14 +50,14 @@ const Historique = () => {
           x: 700,
           scale: 1,
           y: 0,
-          transition: { duration: 0.53, delay: 1.2 },
+          transition: { duration: 0.15, delay: 1.2 },
         }}
         animate={{
           opacity: 1,
           x: 0,
           y: 0,
           scale: 1,
-          transition: { duration: 0.23, delay: 0.37 },
+          transition: { duration: 0.15, delay: 0.28 },
         }}
         exit={{
           opacity: 0,

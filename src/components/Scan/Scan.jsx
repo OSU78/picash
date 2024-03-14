@@ -12,12 +12,10 @@ import s from "./Scan.module.css";
 import NavBar from "../NavBar/NavBar";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setCookie, getCookie } from '../../ConfigPicash.jsx';
-
-
+import { setCookie, getCookie } from "../../ConfigPicash.jsx";
+import { AnimatePresence } from "framer-motion";
+import { QrReader } from "../QrReader/QrReader.tsx";
 const Scan = () => {
-  
-  
   const navigate = useNavigate();
 
   const userData = getCookie("jwt_token_picash")
@@ -38,32 +36,28 @@ const Scan = () => {
     }
   }, [userData, navigate]); // Depend on userData and navigate so the effect runs when either changes
 
-
-
-
-
   return (
     <div className="flex flex-col gap-5 items-center ">
       <motion.div
         className="home h-full w-full flex justify-start items-start"
         initial={{
           opacity: 0,
-          x: 700,
+          x: 0,
           scale: 1,
           y: 0,
-          transition: { duration: 0.53, delay: 1.2 },
+          transition: { duration: 0.15, delay: 1.2 },
         }}
         animate={{
           opacity: 1,
           x: 0,
           y: 0,
           scale: 1,
-          transition: { duration: 0.23, delay: 0.36 },
+          transition: { duration: 0.15, delay: 0.28 },
         }}
         exit={{
           opacity: 0,
           scale: 1,
-          x: -100,
+          x: 0,
           y: 0,
           transition: { duration: 0.25 },
         }}
@@ -85,6 +79,9 @@ const Scan = () => {
                 borderBottomLeftRadius: "20px",
                 borderBottomRightRadius: "20px",
                 maxWidth: "97%",
+                position: "fixed",
+                top: 0,
+                zIndex: 1000,
               }}
             >
               <motion.div className="flex flex-row gap-4 w-full p-2 items-center justify-between pl-9 pr-9">
@@ -101,13 +98,26 @@ const Scan = () => {
                   height: "75vh",
                 }}
               >
-                Main scan page
+                <AnimatePresence>
+                <QrReader />
+                </AnimatePresence>
               </div>
             </div>
           </div>
         </div>
       </motion.div>
-      <NavBar />
+
+      <div  style={{
+        background:"#ffffff2e",
+        marginTop : '65px',
+        zIndex: "5555",
+        padding: "5px",
+    borderRadius: "8px",
+    backdropFilter: "blur(6px)",
+    border: "1px solid #ffffff3b",
+      }}>
+        <NavBar iconwhite={true} />
+      </div>
     </div>
   );
 };
