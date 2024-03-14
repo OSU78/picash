@@ -122,3 +122,11 @@
     min-height: 100%;
     border : 2px solid #f9f9f92a;
 }
+
+
+@media (max-width: 426px) {
+.custom_form_btn_section{
+    max-width: 248px ;
+}
+
+}

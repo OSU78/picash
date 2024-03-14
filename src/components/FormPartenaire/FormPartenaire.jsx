@@ -38,7 +38,7 @@ const handleHideForm = () => {
     >
       <div className="flex flex-row w-full items-center justify-center" style={{
         maxWidth: "87%",
-        marginTop : "30px",
+        marginTop : "8px",
         padding: "5px",
         backgroundColor: "#FFFFFF",
         color: "#5D24FF",
