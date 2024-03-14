@@ -1,4 +1,4 @@
-export const API_URL = "http://162.19.65.178:8080"
+export const API_URL = "https://162.19.65.178:443"
 
 
 

@@ -1,6 +1,6 @@
 
 
-const API_BASE_URL = 'http://162.19.65.178:8080'; // L'URL de base de l'API.
+const API_BASE_URL = 'https://162.19.65.178:443'; // L'URL de base de l'API.
 
 let apiOptions = {
   headers: {

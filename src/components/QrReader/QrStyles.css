@@ -8,7 +8,7 @@
     content: '';
     position: absolute;
     background: rgba(28, 2, 84, 0.108);
-    backdrop-filter: blur(7px);
+    backdrop-filter: blur(4px);
     width: 100%;
     z-index: 100;
     left: 0%;
@@ -55,10 +55,25 @@
   
   .qr-reader .qr-frame {
     position: absolute;
+    opacity: 0;
+    animation: opacity1 1s ;
+    animation-delay: 1s;
     fill: none;
     left: 50%;
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
+    animation-fill-mode: forwards;
+  }
+
+
+
+  @keyframes opacity1 {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
   
   /* Media Queries for mobile screens */
